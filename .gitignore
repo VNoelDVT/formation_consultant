@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.env
+token.json
+credentials.json
+
+# Node.js
+node_modules/
+dist/
+.vite-cache/
+
+# Misc
+.DS_Store
+.vscode/
+*.log
