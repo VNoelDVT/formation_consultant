@@ -9,6 +9,11 @@ from app.utils.auth import get_google_service
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {"message": "Hello, it works!"}
+
+
 class DocRequest(BaseModel):
     title: str
     content: str

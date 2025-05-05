@@ -1,5 +1,11 @@
-from openai import OpenAI
 import os
+from dotenv import load_dotenv
+from openai import OpenAI
+
+# Toujours charger le .env situé dans backend/
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
+
+NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 
 # Initialiser le client NVIDIA (OpenAI-compatible)
 client = OpenAI(
