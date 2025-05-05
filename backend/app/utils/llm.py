@@ -15,14 +15,12 @@ client = OpenAI(
 
 def generate_doc_content(prompt: str) -> str:
     completion = client.chat.completions.create(
-        model="mistralai/mistral-small-24b-instruct",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.2,
-        top_p=0.7,
-        max_tokens=1024,
-        stream=False  # ⬅️ on ne stream PAS ici pour récupérer directement la réponse complète
+    model="meta/llama-3.1-70b-instruct",
+    messages=[{"role": "user", "content": prompt}],
+    temperature=0.2,
+    top_p=0.7,
+    max_tokens=1024,
+    stream=False  # ✅ Pour avoir la réponse complète d'un coup
     )
+    return completion.choices[0].message.content
 
-    # Récupérer le texte généré
-    content = completion.choices[0].message.content
-    return content

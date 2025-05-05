@@ -1,17 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.agents.docs_tool import create_google_doc
-from app.agents.rag_agent import index_document 
-from app.agents.rag_agent import search_relevant_chunks
-from app.utils.llm import generate_doc_content
-from app.utils.auth import get_google_service
-from app.agents.orchestrator import agent_graph
-
+from backend.app.agents.docs_tool import create_google_doc
+from backend.app.agents.rag_agent import index_document, search_relevant_chunks
+from backend.app.utils.llm import generate_doc_content
+from backend.app.utils.auth import get_google_service
+from backend.app.agents.orchestrator import agent_graph
 
 app = FastAPI()
-
-class AgentRequest(BaseModel):
-    message: str
 
 
 @app.get("/")
@@ -22,6 +17,7 @@ def root():
 class DocRequest(BaseModel):
     title: str
     content: str
+
 
 @app.post("/create-doc")
 def create_doc(doc_request: DocRequest):
@@ -35,10 +31,12 @@ def create_doc(doc_request: DocRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 class IndexRequest(BaseModel):
     project_id: str
     document_text: str
     strategy: str = "recursive"
+
 
 @app.post("/index-project")
 def index_project(req: IndexRequest):
@@ -51,11 +49,13 @@ def index_project(req: IndexRequest):
         return {"status": "success", "message": "Projet indexé ✅"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
+
 class SmartDocRequest(BaseModel):
     user_input: str
     doc_title: str
     n_results: int = 3
+
 
 @app.post("/create-doc-smart")
 def create_doc_smart(req: SmartDocRequest):
@@ -94,24 +94,49 @@ def create_doc_smart(req: SmartDocRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
+
+# 🔥 NOUVELLE classe qui couvre tout ce qu'il faut pour le graphe complet
+class FullAgentRequest(BaseModel):
+    message: str
+    project_id: str
+    document_text: str
+    strategy: str = "recursive"
+    n_results: int = 3
+
+
 @app.post("/agent-run")
-def run_agent(req: AgentRequest):
+def run_agent(req: FullAgentRequest):
     try:
-        # Initialiser l'état avec le message utilisateur
-        state = {"user_message": req.message}
-        
+        # Initialiser l'état complet avec toutes les infos reçues
+        state = req.dict()
+
         # Lancer le graphe LangGraph
         result = agent_graph.invoke(state)
-        
-        # Retourner la réponse de l'agent
-        return {
-            "status": "success",
-            "agent_response": result["agent_response"],
-            "action_taken": result["action_taken"]
-        }
+
+        # Vérifier le type pour éviter les erreurs
+        if isinstance(result, dict):
+            return {
+                "status": "success",
+                "agent_response": result.get("agent_response", "Aucune réponse"),
+                "action_taken": result.get("action_taken", "Aucune action"),
+                "google_doc_url": result.get("google_doc_url"),
+                "google_doc_id": result.get("google_doc_id"),
+                "generated_doc": result.get("generated_doc", None),
+                "generated_doc_title": result.get("generated_doc_title"),
+                "indexing_done": result.get("indexing_done"),
+                "rag_results": result.get("rag_results"),
+                "gantt_image_url": result.get("gantt_image_url"),
+                "google_slides_url": result.get("google_slides_url"),
+                "history": result.get("history", [])
+            }
+
+        else:
+            # Si c’est autre chose qu’un dict (erreur logique interne)
+            return {
+                "status": "error",
+                "message": f"Résultat inattendu : {result}"
+            }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-

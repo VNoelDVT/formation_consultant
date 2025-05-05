@@ -1,4 +1,4 @@
-from app.utils.auth import get_google_service
+from backend.app.utils.auth import get_google_service
 
 def create_new_sheet(title):
     """

@@ -1,38 +1,30 @@
 from langgraph.graph import StateGraph, END
-from app.agents.docs_agent import docs_agent_node
-from app.agents.sheets_agent import sheets_agent_node
-from app.agents.gmail_agent import gmail_agent_node
+from backend.app.agents.rag_agent import (
+    rag_index_agent,
+    rag_search_agent,
+    rag_generate_doc_agent,
+    gantt_agent
+)
 
-# ✅ Créer le graphe LangGraph avec dict directement
-workflow = StateGraph(dict)
+# Créer le graphe LangGraph avec l'agent Gantt ajouté
+def create_rag_graph():
+    workflow = StateGraph(dict)
 
-# Ajout des nœuds (agents)
-workflow.add_node("docs_agent", docs_agent_node)
-workflow.add_node("sheets_agent", sheets_agent_node)
-workflow.add_node("gmail_agent", gmail_agent_node)
+    # Étapes / agents
+    workflow.add_node("index", rag_index_agent)
+    workflow.add_node("search", rag_search_agent)
+    workflow.add_node("gantt", gantt_agent)
+    workflow.add_node("generate", rag_generate_doc_agent)
 
-# Exemple de routing (simple règle de mot-clé)
-def route_request(state: dict):
-    message = state.get("user_message", "").lower()
-    if "document" in message or "doc" in message:
-        return "docs_agent"
-    elif "sheet" in message or "spreadsheet" in message or "tableur" in message:
-        return "sheets_agent"
-    elif "email" in message or "mail" in message:
-        return "gmail_agent"
-    else:
-        return None  # aucun agent trouvé
+    # Transitions
+    workflow.set_entry_point("index")
+    workflow.add_edge("index", "search")
+    workflow.add_edge("search", "gantt")
+    workflow.add_edge("gantt", "generate")
+    workflow.add_edge("generate", END)
 
-# ✅ Ajout du routeur en tant que nœud
-workflow.add_node("router", route_request)
+    return workflow.compile()
 
-# ✅ Set entry point par son nom
-workflow.set_entry_point("router")
 
-# Chaque agent revient à la fin
-workflow.add_edge("docs_agent", END)
-workflow.add_edge("sheets_agent", END)
-workflow.add_edge("gmail_agent", END)
-
-# Compiler le graphe
-agent_graph = workflow.compile()
+# On compile et expose le graphe sous le nom utilisé dans main.py
+agent_graph = create_rag_graph()
