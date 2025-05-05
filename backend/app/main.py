@@ -5,9 +5,14 @@ from app.agents.rag_agent import index_document
 from app.agents.rag_agent import search_relevant_chunks
 from app.utils.llm import generate_doc_content
 from app.utils.auth import get_google_service
+from app.agents.orchestrator import agent_graph
 
 
 app = FastAPI()
+
+class AgentRequest(BaseModel):
+    message: str
+
 
 @app.get("/")
 def root():
@@ -55,20 +60,20 @@ class SmartDocRequest(BaseModel):
 @app.post("/create-doc-smart")
 def create_doc_smart(req: SmartDocRequest):
     try:
-        # 🔎 Étape 1 : Recherche vectorielle
+        # Étape 1 : Recherche vectorielle
         relevant_chunks = search_relevant_chunks(req.user_input, req.n_results)
         context = "\n\n".join(relevant_chunks)
 
-        # 🧠 Étape 2 : Création du prompt augmenté
+        # Étape 2 : Création du prompt augmenté
         final_prompt = (
             f"Contexte :\n{context}\n\n"
             f"Tâche : {req.user_input}"
         )
 
-        # 🤖 Étape 3 : Appel NVIDIA API
+        # Étape 3 : Appel NVIDIA API
         generated_content = generate_doc_content(final_prompt)
 
-        # 📝 Étape 4 : Création Google Docs
+        # Étape 4 : Création Google Docs
         service = get_google_service('docs', 'v1')
         doc = service.documents().create(body={'title': req.doc_title}).execute()
         document_id = doc['documentId']
@@ -89,4 +94,24 @@ def create_doc_smart(req: SmartDocRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.post("/agent-run")
+def run_agent(req: AgentRequest):
+    try:
+        # Initialiser l'état avec le message utilisateur
+        state = {"user_message": req.message}
+        
+        # Lancer le graphe LangGraph
+        result = agent_graph.invoke(state)
+        
+        # Retourner la réponse de l'agent
+        return {
+            "status": "success",
+            "agent_response": result["agent_response"],
+            "action_taken": result["action_taken"]
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
