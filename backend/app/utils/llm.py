@@ -13,7 +13,7 @@ client = OpenAI(
     api_key="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"
 )
 
-def generate_doc_content(prompt: str) -> str:
+def generate_content(prompt: str) -> str:
     completion = client.chat.completions.create(
     model="meta/llama-3.1-70b-instruct",
     messages=[{"role": "user", "content": prompt}],
