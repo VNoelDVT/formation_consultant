@@ -34,7 +34,7 @@ const ChatInterface = () => {
             setLogs(data.history || []);
 
         } catch (error) {
-            const errorMsg = '❌ Erreur lors de la requête.';
+            const errorMsg = 'Erreur lors de la requête.';
             setHistory(prev => [...prev, { role: 'agent', content: errorMsg }]);
         } finally {
             setIsLoading(false);  // Désactive le loader
@@ -90,7 +90,7 @@ const ChatInterface = () => {
             <form onSubmit={handleSubmit} className="p-4 bg-gray-800 flex gap-2 w-full">
                 <input
                     type="text"
-                    className="flex-1 border rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 border rounded-lg p-3 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Entrez votre message..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
