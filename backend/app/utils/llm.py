@@ -10,12 +10,12 @@ NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 # Initialiser le client NVIDIA (OpenAI-compatible)
 client = OpenAI(
     base_url="https://integrate.api.nvidia.com/v1",
-    api_key="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"
+    api_key="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"
 )
 
 def generate_content(prompt: str) -> str:
     completion = client.chat.completions.create(
-    model="meta/llama-3.1-70b-instruct",
+    model="mistralai/mistral-small-24b-instruct",
     messages=[{"role": "user", "content": prompt}],
     temperature=0.2,
     top_p=0.7,
@@ -23,4 +23,3 @@ def generate_content(prompt: str) -> str:
     stream=False  # ✅ Pour avoir la réponse complète d'un coup
     )
     return completion.choices[0].message.content
-

@@ -4,13 +4,13 @@ from backend.app.utils.llm import generate_content
 from backend.app.utils.auth import get_google_service
 from backend.app.agents.orchestrator import agent_graph
 from fastapi.middleware.cors import CORSMiddleware
-
+import traceback
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Pour tout autoriser (dev). Tu peux restreindre à ["http://localhost:5173"] après.
+    allow_origins=["*"],  # Pour tout autoriser (dev). Restreins à ["http://localhost:5173"] en prod.
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,7 +20,6 @@ app.add_middleware(
 def root():
     return {"message": "Hello, it works!"}
 
-# NOUVELLE classe qui couvre tout ce qu'il faut pour le graphe complet
 class FullAgentRequest(BaseModel):
     message: str
     project_id: str
@@ -28,17 +27,15 @@ class FullAgentRequest(BaseModel):
     strategy: str = "recursive"
     n_results: int = 3
 
-
 @app.post("/agent-run")
 def run_agent(req: FullAgentRequest):
     try:
-        # Initialiser l'état complet avec toutes les infos reçues
         state = req.dict()
+        print("📥 Requête reçue dans /agent-run :", state)  # 🧠 Log utile
 
-        # Lancer le graphe LangGraph
         result = agent_graph.invoke(state)
+        print("✅ Résultat du graphe :", result)  # 🔍 pour voir le retour exact
 
-        # Vérifier le type pour éviter les erreurs
         if isinstance(result, dict):
             return {
                 "status": "success",
@@ -54,13 +51,13 @@ def run_agent(req: FullAgentRequest):
                 "google_slides_url": result.get("google_slides_url"),
                 "history": result.get("history", [])
             }
-
         else:
-            # Si c’est autre chose qu’un dict (erreur logique interne)
             return {
                 "status": "error",
                 "message": f"Résultat inattendu : {result}"
             }
 
     except Exception as e:
+        print("❌ Erreur complète :")
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))

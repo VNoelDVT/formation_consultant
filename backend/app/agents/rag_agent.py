@@ -1,212 +1,144 @@
-# === 🔧 Dépendances ===
-import os
+# agents/prince2_agent.py
 import json
-import subprocess
-import spacy
-import chromadb
-from sentence_transformers import SentenceTransformer
-from langchain.text_splitter import (
-    RecursiveCharacterTextSplitter,
-    MarkdownTextSplitter,
-    SpacyTextSplitter
-)
-
+import re
 from backend.app.utils.llm import generate_content
-from backend.app.utils.auth import get_google_service
-from backend.app.utils.google_drive import upload_to_gdrive
-from backend.utils_request_manager import (
-    create_request_file,
-    load_request,
-    save_request,
-    delete_request,
-    archive_request,
-    list_current_requests
-)
+from backend.app.utils.google_form import create_google_form
+from backend.app.utils.mailer import send_mail
+from backend.app.db.session_tracker import SessionTracker
+from backend.app.rag_db import RAGDatabase
+from backend.app.utils.google_docs import create_summary_doc
 
-# === Mémoire persistante partagée ===
-MEMORY_FILE = "global_memory.json"
+rag_db = RAGDatabase()
 
-GLOBAL_MEMORY = {
-    "prenom": "",
-    "nom": "",
-    "adresse": "",
-    "situation_familiale": "",
-    "revenus": "",
-    "métier": "",
-    "ressources_financieres": "",
-    "num_secu": "",
-    "date_naissance": "",
-    "lieu_naissance": "",
-    "telephone": "",
-    "email": "",
-    "composition_foyer": "",
-    "derniere_adresse": "",
-    "motif_demande": "",
-    "employeur": ""
-}
+def prince2_agent(state: dict) -> dict:
+    print("🔍 RAG agent for PRINCE2 training launched.")
 
-AGENT_SWITCH = "admin"
+    tracker = SessionTracker(user_id=state.get("user_id", "default"))
+    user_message = state.get("user_message") or state.get("message")
+    print("Prompt user :", repr(user_message))
 
-def load_global_memory():
-    global GLOBAL_MEMORY
-    if os.path.exists(MEMORY_FILE):
-        try:
-            with open(MEMORY_FILE, "r", encoding="utf-8") as f:
-                GLOBAL_MEMORY.update(json.load(f))
-        except Exception as e:
-            print(f"⚠️ Erreur lors du chargement de la mémoire : {e}")
-
-def save_global_memory():
-    try:
-        with open(MEMORY_FILE, "w", encoding="utf-8") as f:
-            json.dump(GLOBAL_MEMORY, f, ensure_ascii=False, indent=2)
-    except Exception as e:
-        print(f"⚠️ Erreur lors de la sauvegarde de la mémoire : {e}")
-
-def admin_doc_agent(state: dict) -> dict:
-    print("📄 Agent Documents Administratifs lancé")
-    global AGENT_SWITCH
-    AGENT_SWITCH = "admin"
-
-    load_global_memory()
-
-    user_message = state.get("user_message") or state.get("message", "")
-
-    extraction_prompt = f"""Tu es un assistant administratif. Voici un message utilisateur : '{user_message}'.
-
-        Si tu détectes des informations personnelles utiles pour remplir un document administratif (nom, adresse, revenus, etc.), retourne un **JSON PUR** (aucun mot autour !) du format suivant (même partiel) :
-
-        {{
-        "prenom": "",
-        "nom": "",
-        "adresse": "",
-        "situation_familiale": "",
-        "revenus": "",
-        "métier": "",
-        "ressources_financieres": "",
-        "num_secu": "",
-        "date_naissance": "",
-        "lieu_naissance": "",
-        "telephone": "",
-        "email": "",
-        "composition_foyer": "",
-        "derniere_adresse": "",
-        "motif_demande": "",
-        "employeur": ""
-        }}
-
-        Sinon, réponds strictement par : null
-    """
-
-    extraction_result = generate_content(extraction_prompt).strip()
-    print(f"🧠 Extraction des infos personnelles : {extraction_result}")
-
-    if extraction_result.lower() != "null":
-        try:
-            extracted_data = json.loads(extraction_result)
-            for k, v in extracted_data.items():
-                if v:
-                    GLOBAL_MEMORY[k] = v
-            save_global_memory()
-        except Exception as e:
-            print(f"⚠️ Erreur de parsing mémoire : {e}")
-        state["memory"] = GLOBAL_MEMORY.copy()
-
-    current_doc_type = state.get("in_progress_doc_type")
-    required_fields = state.get("required_fields", [])
-
-    if not current_doc_type or not required_fields:
-        classification_prompt = (
-            f"Voici la demande utilisateur : '{user_message}'.\n\n"
-            "Voici les documents disponibles et les champs requis :\n"
-            "{\n"
-            "  \"Demande de RSA / APL / autres aides\": [\"situation_familiale\", \"revenus\", \"composition_foyer\", \"derniere_adresse\"],\n"
-            "  \"Demande de renouvellement de carte d’identité / passeport\": [\"nom\", \"prenom\", \"date_naissance\", \"lieu_naissance\", \"adresse\"]\n"
-            "}\n\n"
-            "Si tu reconnais une de ces demandes, retourne un **JSON PUR** comme ceci :\n"
-            "{\n"
-            "  \"est_document_admin\": true,\n"
-            "  \"type_document\": \"Nom exact du document\",\n"
-            "  \"infos_requises\": [\"liste des champs nécessaires\"]\n"
-            "}\n\n"
-            "Sinon, retourne : { \"est_document_admin\": false }"
-        )
-
-        classification_result = generate_content(classification_prompt)
-        print("🧐 Résultat classification :", classification_result)
-
-        try:
-            parsed = json.loads(classification_result)
-        except Exception as e:
-            print(f"❌ Erreur parsing JSON : {e}")
-            state["agent_response"] = "Je n’ai pas compris votre demande. Voici des exemples de documents administratifs reconnus."
-            AGENT_SWITCH = "admin"
-            state["switch"] = "admin"
-            return state
-
-        if not parsed.get("est_document_admin"):
-            if state.get("in_progress_doc_type"):
-                print("ℹ️ Pas de nouveau document détecté, mais un document est déjà en cours. On continue.")
-                current_doc_type = state["in_progress_doc_type"]
-                required_fields = state["required_fields"]
-            else:
-                state["agent_response"] = "Je gère uniquement les documents administratifs suivants. Merci de reformuler."
-                AGENT_SWITCH = "default"
-                state["switch"] = "default"
-                return state
-        else:
-            current_doc_type = parsed["type_document"]
-            required_fields = parsed["infos_requises"]
-            state["in_progress_doc_type"] = current_doc_type
-            state["required_fields"] = required_fields
-
-    for field in required_fields:
-        if field not in GLOBAL_MEMORY:
-            GLOBAL_MEMORY[field] = ""
-
-    missing_infos = [k for k in required_fields if not GLOBAL_MEMORY.get(k)]
-    state["last_missing_infos"] = missing_infos
-
-    if missing_infos:
-        state["agent_response"] = (
-            f"✅ Vous avez demandé le document : **{current_doc_type}**.\n\n"
-            f"Pour le créer, il manque : {', '.join(missing_infos)}. Merci de compléter."
-        )
-        state["action_taken"] = "requesting_missing_info"
-        AGENT_SWITCH = "admin"
-        state["switch"] = "admin"
+    if not user_message:
+        state["agent_response"] = "Je n’ai pas reçu de message. Peux-tu reformuler ?"
+        state["switch"] = "default"
         return state
 
-    AGENT_SWITCH = "default"
-    state["switch"] = "default"
-    memory_text = "\n".join([f"{k.capitalize()} : {v}" for k, v in GLOBAL_MEMORY.items() if v])
+    # --- Détection d’intention de quiz ---
+    question_request_prompt = f"""
+        Tu es un assistant PRINCE2. Voici un message utilisateur : '{user_message}'.
 
-    doc_prompt = (
-        f"Tu es un expert administratif. Rédige un document officiel : {current_doc_type}.\n"
-        f"Voici les informations à utiliser :\n{memory_text}\n\n"
-        "Le document doit être complet, formel et conforme aux normes administratives."
-    )
-    generated_doc = generate_content(doc_prompt)
+        Si tu détectes une demande de quiz PRINCE2, réponds UNIQUEMENT avec ce JSON :
+
+        {{
+        "is_quiz_request": true,
+        "num_questions": 10
+        }}
+
+        Si le message précise un nombre de questions, remplace la valeur.
+
+        Sinon, réponds strictement :
+
+        {{ "is_quiz_request": false, "num_questions": 0 }}
+        """
+
+    llm_response = generate_content(question_request_prompt)
+    print("🧠 Réponse brute du LLM :", repr(llm_response))
 
     try:
-        service = get_google_service('docs', 'v1')
-        doc = service.documents().create(body={'title': current_doc_type}).execute()
-        document_id = doc['documentId']
-        service.documents().batchUpdate(
-            documentId=document_id,
-            body={'requests': [{'insertText': {'location': {'index': 1}, 'text': generated_doc}}]}
-        ).execute()
-
-        state["google_doc_id"] = document_id
-        state["google_doc_url"] = f"https://docs.google.com/document/d/{document_id}/edit"
-        state["generated_doc_title"] = current_doc_type
-        state["agent_response"] = f"✅ Le document **{current_doc_type}** a été généré avec succès : {state['google_doc_url']}"
-        state["action_taken"] = "admin_doc_created_in_google_docs"
-        state.pop("in_progress_doc_type", None)
-        state.pop("required_fields", None)
-
+        match = re.search(r"\{.*?\}", llm_response, re.DOTALL)
+        if match:
+            json_text = match.group().replace("\\_", "_")  # ← corrige les échappements invalides
+            decision = json.loads(json_text)
+        else:
+            raise ValueError("❌ Aucun JSON détecté dans la réponse LLM.")
     except Exception as e:
-        state["agent_response"] = f"❌ Erreur lors de la création du Google Docs : {str(e)}"
-        state["action_taken"] = "admin_doc_creation_failed"
+        print("❌ Erreur de parsing JSON :", e)
+        state["agent_response"] = "Je n’ai pas compris votre demande. Pouvez-vous reformuler?"
+        state["switch"] = "default"
+        return state
 
+    # --- Si quiz demandé ---
+    if decision["is_quiz_request"]:
+        print("🧠 Création du quiz...")
+        previous_errors = tracker.get_errors_by_topic()
+        print("🧠 Erreurs précédentes :", previous_errors)
+
+        if previous_errors:
+            user_message += " " + " ".join(previous_errors)
+
+        retrieved_docs = rag_db.retrieve(user_message, top_k=5)
+        context = "\n---\n".join(retrieved_docs)
+
+        generation_prompt = f"""Based on this PRINCE2 training material:
+        {context}
+
+        Create {decision['num_questions']} multiple-choice questions with 4 options.
+        Specify the correct one. Focus more on these weak areas: {', '.join(previous_errors) if previous_errors else 'general PRINCE2 knowledge'}.
+
+        Return a JSON list like:
+        [
+        {{
+            "question": "...",
+            "answers": ["A", "B", "C", "D"],
+            "correct_answer": "B"
+        }},
+        ...
+        ]
+        """
+        print("🧠 Generation prompt :", generation_prompt)
+        llm_output = generate_content(generation_prompt)
+        print("🧠 Output du LLM (questions):", repr(llm_output))
+
+        try:
+            match = re.search(r"\[\s*{.*}\s*]", llm_output, re.DOTALL)
+            if match:
+                cleaned = match.group()
+                questions = json.loads(cleaned)
+            else:
+                raise ValueError("Aucun JSON valide détecté dans la réponse.")
+        except Exception as e:
+            print("❌ Erreur de parsing JSON des questions :", e)
+            state["agent_response"] = "Je n’ai pas pu générer les questions du quiz. Merci de reformuler ou réessayer."
+            state["switch"] = "default"
+            state["action_taken"] = "quiz_generation_failed"
+            return state
+
+        form_url = create_google_form(questions)
+        tracker.store_questions(questions)
+
+        # ✉️ Envoi par mail
+        user_email = state.get("user_email", "valentin.noel@devoteam.com")
+        send_mail(
+            to_email=user_email,
+            subject="📘 Votre questionnaire PRINCE2 est prêt",
+            body=f"Bonjour,\n\nVoici votre formulaire PRINCE2 : {form_url}\nBonne chance !"
+        )
+
+        state["agent_response"] = f"Formulaire PRINCE2 généré : {form_url} (envoyé aussi par mail ✅)"
+        state["form_url"] = form_url
+        state["action_taken"] = "quiz_created"
+        return state
+
+    # --- Si demande de résumé ---
+    if "résumé" in user_message.lower():
+        results = tracker.get_latest_results()
+        summary_prompt = f"""Voici les résultats du test PRINCE2 : {json.dumps(results, indent=2)}.
+
+Rédige un résumé en français indiquant les points maîtrisés et les points à améliorer.
+Sois bienveillant, structuré et professionnel. Le résumé doit être prêt à être envoyé à l'utilisateur.
+"""
+        summary_text = generate_content(summary_prompt)
+        doc_url = create_summary_doc(summary_text, title="Résumé session PRINCE2")
+
+        state["agent_response"] = f"Résumé généré : {doc_url}"
+        state["summary_url"] = doc_url
+        state["action_taken"] = "summary_created"
+        return state
+
+    # --- Réponse experte Devoteam par défaut ---
+    state["agent_response"] = (
+        "En tant qu’expert Devoteam en agilité et en PRINCE2, "
+        "je peux vous proposer un quiz pour tester vos connaissances "
+        "ou générer un résumé de votre progression. Dites-moi ce que vous préférez !"
+    )
+    state["switch"] = "default"
     return state
