@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from typing import Optional
 from pydantic import BaseModel
 from backend.app.utils.llm import generate_content
 from backend.app.utils.auth import get_google_service
@@ -21,11 +22,15 @@ def root():
     return {"message": "Hello, it works!"}
 
 class FullAgentRequest(BaseModel):
-    message: str
-    project_id: str
-    document_text: str
-    strategy: str = "recursive"
-    n_results: int = 3
+    message: Optional[str] = None
+    answers: Optional[list] = None
+    session_id: Optional[str] = None
+    user_id: Optional[str] = "default"
+    project_id: Optional[str] = None
+    document_text: Optional[str] = None
+    strategy: Optional[str] = "recursive"
+    n_results: Optional[int] = 3
+
 
 @app.post("/agent-run")
 def run_agent(req: FullAgentRequest):
@@ -41,6 +46,8 @@ def run_agent(req: FullAgentRequest):
                 "status": "success",
                 "agent_response": result.get("agent_response", "Aucune réponse"),
                 "action_taken": result.get("action_taken", "Aucune action"),
+                "questions": result.get("questions"),
+                "session_id": result.get("session_id"), 
                 "google_doc_url": result.get("google_doc_url"),
                 "google_doc_id": result.get("google_doc_id"),
                 "generated_doc": result.get("generated_doc", None),

@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What does PRINCE2 stand for?",
+    "answers": [
+      "A. Project Resource Integration and Control Environment",
+      "B. Projects IN Controlled Environments",
+      "C. Project Integration and Control Environment",
+      "D. Projects in Controlled Environments"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is NOT a PRINCE2 principle?",
+    "answers": [
+      "A. Continued Business Justification",
+      "B. Learn from Experience",
+      "C. Focus on Deliverables",
+      "D. Tailor to Suit the Project Environment"
+    ],
+    "correct_answer": "C"
+  },
+  {
+    "question": "What is the purpose of the Initiating a Project process?",
+    "answers": [
+      "A. To ensure that there is a clear understanding of the project's scope and objectives",
+      "B. To ensure that the project is properly authorized and resourced",
+      "C. To ensure that the project is properly planned and controlled",
+      "D. To ensure that the project is properly closed"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 theme?",
+    "answers": [
+      "A. Risk Management",
+      "B. Project Management",
+      "C. Project Planning",
+      "D. Project Control"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "What is the purpose of the Managing a Stage Boundary process?",
+    "answers": [
+      "A. To ensure that the project is properly planned and controlled",
+      "B. To ensure that the project is properly authorized and resourced",
+      "C. To ensure that the project is properly closed",
+      "D. To ensure that the project is properly reviewed and approved"
+    ],
+    "correct_answer": "D"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 role?",
+    "answers": [
+      "A. Project Manager",
+      "B. Project Coordinator",
+      "C. Project Leader",
+      "D. Project Supervisor"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "What is the purpose of the Directing a Project process?",
+    "answers": [
+      "A. To ensure that the project is properly planned and controlled",
+      "B. To ensure that the project is properly authorized and resourced",
+      "C. To ensure that the project is properly closed",
+      "D. To ensure that the project is properly reviewed and approved"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 product?",
+    "answers": [
+      "A. Project Plan",
+      "B. Project Charter",
+      "C. Project Scope",
+      "D. Project Budget"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "What is the purpose of the Managing Product Delivery process?",
+    "answers": [
+      "A. To ensure that the project is properly planned and controlled",
+      "B. To ensure that the project is properly authorized and resourced",
+      "C. To ensure that the project is properly closed",
+      "D. To ensure that the project is properly reviewed and approved"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 management product?",
+    "answers": [
+      "A. Project Brief",
+      "B. Project Charter",
+      "C. Project Plan",
+      "D. Project Scope"
+    ],
+    "correct_answer": "A"
+  }
+]

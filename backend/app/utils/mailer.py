@@ -4,8 +4,8 @@ from email.mime.text import MIMEText
 import os
 
 # Variables d’environnement (ou hardcodées pour test)
-EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS", "tonemail@gmail.com")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "mot_de_passe_app")
+EMAIL_ADDRESS = "val.noel2369@gmail.com"
+EMAIL_PASSWORD = "aazt etlz uzvu dhfm"
 
 def send_mail(to_email: str, subject: str, body: str):
     try:

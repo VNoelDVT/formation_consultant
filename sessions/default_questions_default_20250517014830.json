@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What does PRINCE2 stand for?",
+    "answers": [
+      "A. Project Resource Integration and Control Environment",
+      "B. Projects IN Controlled Environments",
+      "C. Project Integration and Control Environment",
+      "D. Projects in Controlled Environments"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is NOT a PRINCE2 principle?",
+    "answers": [
+      "A. Continued Business Justification",
+      "B. Learn from Experience",
+      "C. Focus on Deliverables",
+      "D. Tailor to Suit the Project Environment"
+    ],
+    "correct_answer": "C"
+  },
+  {
+    "question": "What is the purpose of the Initiating a Project process?",
+    "answers": [
+      "A. To define the project's scope and objectives",
+      "B. To ensure that the project has a sound basis before starting work",
+      "C. To manage the project's risks",
+      "D. To close the project"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which role is responsible for ensuring that the project remains viable?",
+    "answers": [
+      "A. Project Manager",
+      "B. Project Board",
+      "C. Team Manager",
+      "D. Project Assurance"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "What is the purpose of the Managing a Stage Boundary process?",
+    "answers": [
+      "A. To plan the next stage",
+      "B. To review the project's progress",
+      "C. To ensure that the project remains within its tolerances",
+      "D. To close the project"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 theme?",
+    "answers": [
+      "A. Risk Management",
+      "B. Quality Management",
+      "C. Change Management",
+      "D. All of the above"
+    ],
+    "correct_answer": "D"
+  },
+  {
+    "question": "What is the purpose of the Directing a Project process?",
+    "answers": [
+      "A. To manage the project's day-to-day activities",
+      "B. To provide direction and control for the project",
+      "C. To manage the project's risks",
+      "D. To close the project"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 principle?",
+    "answers": [
+      "A. Manage by Exception",
+      "B. Focus on Deliverables",
+      "C. Tailor to Suit the Project Environment",
+      "D. All of the above"
+    ],
+    "correct_answer": "D"
+  },
+  {
+    "question": "What is the purpose of the Managing Product Delivery process?",
+    "answers": [
+      "A. To manage the project's risks",
+      "B. To ensure that the project's products are delivered to the required quality",
+      "C. To manage the project's day-to-day activities",
+      "D. To close the project"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which role is responsible for ensuring that the project's products are delivered to the required quality?",
+    "answers": [
+      "A. Project Manager",
+      "B. Project Board",
+      "C. Team Manager",
+      "D. Project Assurance"
+    ],
+    "correct_answer": "C"
+  }
+]

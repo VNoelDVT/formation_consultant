@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What does PRINCE2 stand for?",
+    "answers": [
+      "A. Project Resource Integration and Control Environment",
+      "B. Projects IN Controlled Environments",
+      "C. Project Integration and Control Environment",
+      "D. Projects in Controlled Environments"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is NOT a PRINCE2 principle?",
+    "answers": [
+      "A. Continued Business Justification",
+      "B. Learn from Experience",
+      "C. Focus on Deliverables",
+      "D. Tailor to Suit the Project Environment"
+    ],
+    "correct_answer": "C"
+  },
+  {
+    "question": "What is the purpose of the Initiating a Project process?",
+    "answers": [
+      "A. To ensure that the project has a sound basis before starting work",
+      "B. To ensure that the project is completed on time",
+      "C. To ensure that the project is within budget",
+      "D. To ensure that the project is completed to the required quality"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "Who is responsible for the day-to-day management of the project?",
+    "answers": [
+      "A. Project Board",
+      "B. Project Manager",
+      "C. Project Assurance",
+      "D. Project Support"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 theme?",
+    "answers": [
+      "A. Risk Management",
+      "B. Project Management",
+      "C. Project Planning",
+      "D. Project Control"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "What is the purpose of the Managing a Stage Boundary process?",
+    "answers": [
+      "A. To plan the next stage of the project",
+      "B. To ensure that the project is completed on time",
+      "C. To ensure that the project is within budget",
+      "D. To ensure that the project is completed to the required quality"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "Who is responsible for ensuring that the project remains viable?",
+    "answers": [
+      "A. Project Manager",
+      "B. Project Board",
+      "C. Project Assurance",
+      "D. Project Support"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 process?",
+    "answers": [
+      "A. Quality Management",
+      "B. Managing Product Delivery",
+      "C. Risk Management",
+      "D. Change Management"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "What is the purpose of the Directing a Project process?",
+    "answers": [
+      "A. To ensure that the project is completed on time",
+      "B. To ensure that the project is within budget",
+      "C. To ensure that the project is completed to the required quality",
+      "D. To ensure that the project has a sound basis before starting work"
+    ],
+    "correct_answer": "D"
+  },
+  {
+    "question": "Who is responsible for providing advice and guidance to the Project Board?",
+    "answers": [
+      "A. Project Manager",
+      "B. Project Assurance",
+      "C. Project Support",
+      "D. Project Team"
+    ],
+    "correct_answer": "B"
+  }
+]

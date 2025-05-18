@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What does PRINCE2 stand for?",
+    "answers": [
+      "A. Project Resource Integration and Control Environment",
+      "B. Projects IN Controlled Environments",
+      "C. Project Integration and Control Environment",
+      "D. Projects in Controlled Environments"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is NOT a PRINCE2 principle?",
+    "answers": [
+      "A. Continued Business Justification",
+      "B. Learn from Experience",
+      "C. Focus on Deliverables",
+      "D. Tailor to Suit the Project Environment"
+    ],
+    "correct_answer": "C"
+  },
+  {
+    "question": "What is the purpose of the Initiating a Project process?",
+    "answers": [
+      "A. To define the project's scope and objectives",
+      "B. To ensure that the project has a sound basis before starting work",
+      "C. To plan the project in detail",
+      "D. To close the project"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which role is responsible for ensuring that the project remains viable?",
+    "answers": [
+      "A. Project Manager",
+      "B. Project Board",
+      "C. Team Manager",
+      "D. Project Assurance"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "What is the purpose of the Business Case theme?",
+    "answers": [
+      "A. To ensure that the project remains within budget",
+      "B. To ensure that the project delivers the expected benefits",
+      "C. To ensure that the project is completed on time",
+      "D. To ensure that the project is completed within scope"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 theme?",
+    "answers": [
+      "A. Risk Management",
+      "B. Quality Management",
+      "C. Change Management",
+      "D. All of the above"
+    ],
+    "correct_answer": "D"
+  },
+  {
+    "question": "What is the purpose of the Managing a Stage Boundary process?",
+    "answers": [
+      "A. To plan the next stage",
+      "B. To review the current stage and plan the next stage",
+      "C. To close the project",
+      "D. To initiate the project"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 principle?",
+    "answers": [
+      "A. Manage by Exception",
+      "B. Manage by Objectives",
+      "C. Manage by Deliverables",
+      "D. Manage by Stages"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "What is the purpose of the Directing a Project process?",
+    "answers": [
+      "A. To ensure that the project is initiated properly",
+      "B. To ensure that the project is managed properly",
+      "C. To ensure that the project is closed properly",
+      "D. To ensure that the project is directed properly"
+    ],
+    "correct_answer": "D"
+  },
+  {
+    "question": "Which role is responsible for the day-to-day management of the project?",
+    "answers": [
+      "A. Project Board",
+      "B. Project Manager",
+      "C. Team Manager",
+      "D. Project Assurance"
+    ],
+    "correct_answer": "B"
+  }
+]
