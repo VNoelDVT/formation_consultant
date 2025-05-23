@@ -3,7 +3,6 @@ import json
 import re
 import os
 from backend.app.utils.llm import generate_content
-from backend.app.utils.google_form import create_google_form
 from backend.app.utils.mailer import send_mail
 from backend.app.db.session_tracker import SessionTracker
 from backend.app.rag_db import RAGDatabase

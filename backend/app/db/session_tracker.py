@@ -75,5 +75,13 @@ class SessionTracker:
         timestamps.sort()
         latest_timestamp = timestamps[-1]
         return f"{self.user_id}_{latest_timestamp}"
+    
+    def save_user_answers(self, session_id, answers: list):
+        """
+        Sauvegarde les réponses utilisateur dans un fichier.
+        """
+        path = os.path.join(self.base_path, f"{self.user_id}_answers_{session_id}.json")
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump({"answers": answers}, f, ensure_ascii=False, indent=2)
 
 
