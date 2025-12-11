@@ -883,11 +883,11 @@
         </div>
 
         <div class="sidebar-footer">
-            <div class="user-badge">
-                <div class="user-avatar">VN</div>
+            <div class="user-badge" id="sidebarUserBadge" style="opacity:0.7">
+                <div class="user-avatar" id="sidebarAvatar" style="background:#334155;color:#94a3b8">?</div>
                 <div class="user-info">
-                    <div class="user-name">Valentin Noël</div>
-                    <div class="user-plan">Devoteam Premium</div>
+                    <div class="user-name" id="sidebarName">Invité</div>
+                    <div class="user-plan" id="sidebarStatus">Connexion requise</div>
                 </div>
             </div>
         </div>
@@ -907,13 +907,20 @@
             <!-- Welcome Screen -->
             <div class="welcome-screen" id="welcomeScreen">
                 <div class="welcome-icon">🎓</div>
-                <h1 class="welcome-title" id="welcomeTitle">Bonjour Valentin !</h1>
+                <h1 class="welcome-title" id="welcomeTitle">Bienvenue sur Devoteam Coach</h1>
                 <p class="welcome-subtitle" id="welcomeSubtitle">
-                    Sélectionnez votre parcours de certification.
+                    Connectez-vous pour accéder à vos parcours.
                 </p>
 
+                <button id="initialLoginBtn" onclick="handleInitialLogin()"
+                    style="background:white;color:#333;border:none;padding:12px 24px;border-radius:24px;font-weight:600;display:flex;align-items:center;gap:12px;cursor:pointer;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-top:20px;transition:all 0.2s;"
+                    onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <img src="https://www.google.com/favicon.ico" style="width:20px;height:20px;">
+                    Se connecter avec Google
+                </button>
+
                 <!-- Cert Selection -->
-                <div class="suggestion-chips" id="certChips">
+                <div class="suggestion-chips" id="certChips" style="display:none;margin-top:24px;">
                     <div class="suggestion-chip" onclick="selectCert('PRINCE2')">
                         <span class="chip-badge"
                             style="background:linear-gradient(135deg, #fbbf24, #d97706);color:#fff;">P2</span>
@@ -1082,6 +1089,57 @@
         let currentCertification = 'PRINCE2';
         let currentQuestion = 0;
         let userAnswers = [];
+
+        function handleInitialLogin() {
+            const btn = document.getElementById('initialLoginBtn');
+            // Simulate processing
+            btn.innerHTML = '<div class="typing-dots" style="display:inline-flex;gap:4px;"><div class="typing-dot" style="background:#333"></div><div class="typing-dot" style="background:#333"></div><div class="typing-dot" style="background:#333"></div></div> Connexion...';
+
+            setTimeout(() => {
+                // Determine Greeting
+                const now = new Date();
+                const hrs = now.getHours();
+                let greet = "Bonjour";
+                if (hrs >= 12 && hrs < 14) greet = "Bon appétit";
+                else if (hrs >= 18) greet = "Bonsoir";
+
+                // Update Welcome
+                const title = document.getElementById('welcomeTitle');
+                title.style.opacity = '0';
+                setTimeout(() => {
+                    title.textContent = `${greet} Valentin !`;
+                    title.style.opacity = '1';
+                }, 300);
+
+                const subtitle = document.getElementById('welcomeSubtitle');
+                subtitle.style.opacity = '0';
+                setTimeout(() => {
+                    subtitle.textContent = "Sélectionnez votre parcours de certification.";
+                    subtitle.style.opacity = '1';
+                }, 300);
+
+                // Hide Btn, Show Chips
+                btn.style.opacity = '0';
+                setTimeout(() => {
+                    btn.style.display = 'none';
+                    const chips = document.getElementById('certChips');
+                    chips.style.display = 'flex';
+                    chips.style.opacity = '0';
+                    setTimeout(() => chips.style.opacity = '1', 50);
+                    chips.style.transition = 'opacity 0.5s ease';
+                }, 500);
+
+                // Update Sidebar smoothly
+                document.getElementById('sidebarName').textContent = "Valentin Noël";
+                document.getElementById('sidebarStatus').textContent = "Devoteam Premium";
+                const avatar = document.getElementById('sidebarAvatar');
+                avatar.textContent = "VN";
+                avatar.style.background = "linear-gradient(135deg, #f093fb, #f5576c)";
+                avatar.style.color = "white";
+                document.getElementById('sidebarUserBadge').style.opacity = "1";
+
+            }, 1200);
+        }
 
         function selectCert(cert) {
             currentCertification = cert;

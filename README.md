@@ -8,7 +8,7 @@ A standalone, visually stunning demo of the **Devoteam Coach** AI assistant for 
 - **Gemini-Style UI**: Modern, dark-themed interface with glassmorphism and smooth animations.
 - **Interactive Quiz**: A 5-question flow (PRINCE2 or PMP) with instant feedback.
 - **Adaptive Learning**: Fails in **any** question trigger targeted, clickable exercise recommendations (e.g., Facts, Lectures) specific to the error.
-- **Session Memory Mock**: Simulates a Google SSO login to "retrieve" historical progress.
+- **Realistic Authentication**: Starts in "Guest Mode" and simulates a Google Sign-In flow to personalize the interface (e.g., "Bon appétit Valentin").
 - **PDF Reporting**: Generates a fast, printable HTML-based PDF report customized for the selected certification.
 
 ## How to Run
