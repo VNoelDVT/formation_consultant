@@ -966,54 +966,114 @@
                 {
                     question: "Quel est le rôle principal du Comité de Pilotage Projet dans PRINCE2 ?",
                     answers: ["A. Gérer le travail quotidien du projet", "B. Fournir une direction et prendre des décisions clés", "C. Créer les produits du projet", "D. Planifier les étapes du projet"],
-                    correct: 1
+                    correct: 1,
+                    exercise: {
+                        icon: '👥',
+                        title: 'Fiche : Le Comité de Pilotage',
+                        desc: 'Rôles et Responsabilités (Thème Organisation)',
+                        content: `<p><strong>Le Comité de Pilotage</strong> est responsable de la réussite du projet. Il ne gère pas le quotidien (rôle du Chef de Projet) mais prend les décisions clés.</p><div style="background:rgba(168,85,247,0.1);padding:12px;border-radius:8px;margin:12px 0;border-left:4px solid var(--accent-purple);"><strong>Point Clé :</strong> Il représente 3 intérêts : Business (Exécutif), Utilisateur, et Fournisseur.</div>`
+                    }
                 },
                 {
                     question: "Combien de principes PRINCE2 existe-t-il ?",
                     answers: ["A. 5 principes", "B. 6 principes", "C. 7 principes", "D. 8 principes"],
-                    correct: 2
+                    correct: 2,
+                    exercise: {
+                        icon: '📜',
+                        title: 'Lecture : Les 7 Principes',
+                        desc: 'Les fondements de la méthodologie',
+                        content: `<p>PRINCE2 est basé sur <strong>7 Principes</strong> universels. Si un projet ne respecte pas ces principes, ce n'est pas un projet PRINCE2.</p><ul style="margin:12px 0 12px 20px;line-height:1.6;"><li>Justification continue pour l'entreprise</li><li>Leçons tirées de l'expérience</li><li>Rôles et responsabilités définis</li><li>Management par séquences</li><li>Management par exception</li><li>Focalisation sur le produit</li><li>Adaptation à l'environnement projet</li></ul>`
+                    }
                 },
                 {
                     question: "Quel document définit ce qui doit être livré, son niveau de qualité, et les responsabilités ?",
                     answers: ["A. Le Plan de Projet", "B. Le Cas d'Affaire", "C. La Description de Produit", "D. Le Registre des Risques"],
-                    correct: 2
+                    correct: 2,
+                    exercise: {
+                        icon: '📝',
+                        title: 'Quiz : La Qualité',
+                        desc: 'Description de Produit vs Plan',
+                        content: `<p><strong>La Description de Produit</strong> est au cœur de l'approche "Focalisation sur le Produit". Elle est créée lors de la planification.</p><p>Elle définit les critères de qualité que le produit doit respecter pour être accepté. C'est le "Ce que nous devons livrer" avant le "Comment".</p>`
+                    }
                 },
                 {
                     question: "Quel thème PRINCE2 s'assure que le projet reste justifiable ?",
                     answers: ["A. Organisation", "B. Qualité", "C. Cas d'Affaire", "D. Risques"],
-                    correct: 2
+                    correct: 2,
+                    exercise: {
+                        icon: '📖',
+                        title: 'Lecture : Cas d\'Affaire',
+                        desc: 'La justification continue (Thème Business Case)',
+                        content: `<p><strong>Le Cas d'Affaire</strong> (Business Case) est le moteur du projet. Il justifie pourquoi le travail est entrepris.</p><div style="background:rgba(34,197,94,0.1);padding:12px;border-radius:8px;margin:12px 0;border-left:4px solid #22c55e;"><strong>Règle d'Or :</strong> Un projet PRINCE2 doit avoir une justification valide au début, qui reste valide pendant le projet, et qui est confirmée à la fin.</div>`
+                    }
                 },
                 {
                     question: "Dans quelle phase le Chef de Projet prépare-t-il le Plan de Projet ?",
                     answers: ["A. Démarrer le Projet", "B. Initialiser le Projet", "C. Contrôler une Séquence", "D. Gérer la Livraison des Produits"],
-                    correct: 1
+                    correct: 1,
+                    exercise: {
+                        icon: '📅',
+                        title: 'Fiche : Initialiser le Projet',
+                        desc: 'Processus IP vs DP',
+                        content: `<p>Le <strong>Plan de Projet</strong> est créé durant le processus "Initialiser le Projet" (IP). C'est la première vraie séquence du projet.</p><p>Ne pas confondre avec "Démarrer le Projet" (SU) où l'on crée seulement un plan pour la séquence d'initialisation.</p>`
+                    }
                 }
             ],
             'PMP': [
                 {
                     question: "Quel document autorise formellement l'existence d'un projet ?",
                     answers: ["A. Le Plan de Management de Projet", "B. La Charte du Projet", "C. L'Énoncé du Contrat", "D. Le Business Case"],
-                    correct: 1
+                    correct: 1,
+                    exercise: {
+                        icon: '📘',
+                        title: 'Lecture : La Charte',
+                        desc: 'Processus d\'Initialisation (4.1)',
+                        content: `<p><strong>La Charte du Projet</strong> (Project Charter) autorise formellement le projet et donne autorité au Chef de Projet.</p><div style="background:rgba(59,130,246,0.1);padding:12px;border-radius:8px;margin:12px 0;border-left:4px solid #3b82f6;"><strong>PMBOK 4.1 :</strong> Elle est signée par le Sponsor. C'est le point de départ de l'intégration.</div>`
+                    }
                 },
                 {
                     question: "Dans la gestion de la valeur acquise, que signifie un CPI < 1.0 ?",
                     answers: ["A. Le projet est en avance sur le planning", "B. Le projet est en retard", "C. Le projet dépasse le budget", "D. Le projet est sous le budget"],
-                    correct: 2
+                    correct: 2,
+                    exercise: {
+                        icon: '📊',
+                        title: 'Exercice : EVM (KPIs)',
+                        desc: 'Comprendre CPI et SPI',
+                        content: `<p><strong>CPI (Cost Performance Index)</strong> mesure l'efficacité financière.</p><ul><li>CPI = EV / AC</li><li>CPI < 1 : Vous dépensez plus que prévu (Mauvais).</li><li>CPI > 1 : Vous dépensez moins que prévu (Bon).</li></ul><p>Ne pas confondre avec SPI (Schedule Performance Index) qui concerne le planning.</p>`
+                    }
                 },
                 {
                     question: "Quelle structure organisationnelle donne le plus de pouvoir au Chef de Projet ?",
                     answers: ["A. Matricielle Faible", "B. Projetée (Projectized)", "C. Fonctionnelle", "D. Matricielle Forte"],
-                    correct: 1
+                    correct: 1,
+                    exercise: {
+                        icon: '🏢',
+                        title: 'Fiche : Structures',
+                        desc: 'Matricielle vs Projetée',
+                        content: `<p>Dans une structure <strong>Projetée</strong>, le Chef de Projet a l'autorité totale (High to Ultimate). L'équipe lui est dédiée.</p><p>Dans une structure <strong>Fonctionnelle</strong>, il a peu ou pas de pouvoir (Little or None).</p>`
+                    }
                 },
                 {
                     question: "Quel est le but principal du processus 'Maitriser la qualité' ?",
                     answers: ["A. Auditer les exigences de qualité", "B. Vérifier que les livrables sont corrects", "C. Créer le plan de gestion de la qualité", "D. Améliorer les processus"],
-                    correct: 1
+                    correct: 1,
+                    exercise: {
+                        icon: '✅',
+                        title: 'Lecture : Qualité',
+                        desc: 'Assurance vs Contrôle',
+                        content: `<p><strong>Maitriser la Qualité</strong> (Control Quality) se concentre sur les <strong>livrables</strong> (Vérifier qu'ils sont corrects).</p><p>Gérer la Qualité (Manage Quality) se concentre sur les <strong>processus</strong> (Audits, amélioration continue).</p>`
+                    }
                 },
                 {
                     question: "Qui est responsable de la gestion des parties prenantes ?",
                     answers: ["A. Le Sponsor", "B. L'Équipe Projet", "C. Le Chef de Projet", "D. Le Client"],
-                    correct: 2
+                    correct: 2,
+                    exercise: {
+                        icon: '🤝',
+                        title: 'Quiz : Parties Prenantes',
+                        desc: 'Engagement et Communication',
+                        content: `<p>Le <strong>Chef de Projet</strong> est responsable ultime de l'engagement des parties prenantes. Il doit identifier, planifier, gérer et contrôler leur engagement tout au long du projet.</p>`
+                    }
                 }
             ]
         };
@@ -1259,19 +1319,16 @@
                 exercisesHTML = '<div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border-color);">' +
                     '<h4 style="font-size:16px;margin-bottom:16px;">🎯 Exercices ciblés recommandés</h4>' +
                     '<div style="display:flex;flex-direction:column;gap:12px;">' +
-                    wrong.map((q, idx) => {
-                        const exTypes = [{ icon: '📖', title: 'Lecture approfondie', desc: 'Relire le chapitre du manuel PRINCE2' }, { icon: '🎮', title: 'Quiz thématique', desc: 'Pratiquer avec des questions similaires' }, { icon: '📝', title: 'Fiche de révision', desc: 'Créer une synthèse des points clés' }, { icon: '🔄', title: 'Cas pratique', desc: 'Appliquer le concept à un projet réel' }];
-                        const ex = exTypes[idx % exTypes.length];
-                        const qNum = questions.indexOf(q) + 1;
-                        const isSpecial = (currentCertification === 'PRINCE2' && qNum === 4) || (currentCertification === 'PMP' && qNum === 1);
-                        const specialTitle = currentCertification === 'PMP' ? 'Lecture : La Charte' : 'Lecture : Cas d\'Affaire';
-                        const specialDesc = currentCertification === 'PMP' ? 'La Charte autorise le projet. Accédez au module 4.1.' : 'Le thème du Cas d\'Affaire est central. Relisez le chapitre 6.';
+                    wrong.map((q) => {
+                        const qIndex = questions.indexOf(q);
+                        const qNum = qIndex + 1;
+                        const ex = q.exercise;
 
-                        return `<div style="background:linear-gradient(135deg,rgba(102,126,234,0.1),rgba(168,85,247,0.1));border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:16px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='translateX(0)'" onclick="${isSpecial ? 'startExercise()' : ''}">
-                            <div style="width:44px;height:44px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">${isSpecial ? '📖' : ex.icon}</div>
+                        return `<div style="background:linear-gradient(135deg,rgba(102,126,234,0.1),rgba(168,85,247,0.1));border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:16px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='translateX(0)'" onclick="startExercise(${qIndex})">
+                            <div style="width:44px;height:44px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">${ex.icon}</div>
                             <div style="flex:1;">
-                                <div style="font-weight:600;font-size:15px;margin-bottom:4px;">${isSpecial ? specialTitle : ex.title}</div>
-                                <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">${isSpecial ? specialDesc : ex.desc}</div>
+                                <div style="font-weight:600;font-size:15px;margin-bottom:4px;">${ex.title}</div>
+                                <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">${ex.desc}</div>
                                 <div style="font-size:12px;color:var(--accent-purple);margin-top:6px;">Basé sur Question ${qNum}</div>
                             </div>
                             <span style="color:var(--text-muted);font-size:18px;">→</span>
@@ -1320,55 +1377,32 @@
             }, 800);
         }
 
-        function startExercise() {
+        function startExercise(index) {
             const container = document.getElementById('messagesContainer');
+            const q = questions[index];
+            const ex = q.exercise;
 
-            let content = '';
-            if (currentCertification === 'PMP') {
-                content = `
-                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
-                        <div style="width:40px;height:40px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;">📘</div>
-                        <div>
-                            <h3 style="font-size:18px;">La Charte du Projet</h3>
-                            <span style="font-size:12px;color:var(--accent-purple);">PMBOK Guide • Section 4.1</span>
-                        </div>
+            // Simple header based on exercise type
+            const header = `
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+                    <div style="width:40px;height:40px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;">${ex.icon}</div>
+                    <div>
+                        <h3 style="font-size:18px;">${ex.title}</h3>
+                        <span style="font-size:12px;color:var(--accent-purple);">${ex.desc}</span>
                     </div>
-                    <div style="line-height:1.6;color:var(--text-secondary);font-size:14px;background:rgba(255,255,255,0.03);padding:24px;border-radius:16px;">
-                        <p style="margin-bottom:16px;"><strong style="color:var(--text-primary);">Définition :</strong> La Charte du Projet (Project Charter) est le document émis par le sponsor qui autorise formellement l'existence du projet et donne au chef de projet l'autorité d'utiliser les ressources organisationnelles.</p>
-                        
-                        <div style="background:rgba(59,130,246,0.1);border-left:4px solid #3b82f6;padding:12px;margin:20px 0;border-radius:0 8px 8px 0;">
-                            <strong style="color:#3b82f6;">Point clé :</strong> Sans Charte, il n'y a pas de projet. C'est le lien entre la stratégie de l'organisation et le projet.
-                        </div>
+                </div>
+            `;
 
-                        <p>Elle contient généralement : les besoins d'affaires, les objectifs mesurables, les risques de haut niveau, et la liste des parties prenantes clés.</p>
-                    </div>
-                `;
-            } else {
-                content = `
-                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
-                        <div style="width:40px;height:40px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;">📖</div>
-                        <div>
-                            <h3 style="font-size:18px;">Le Cas d'Affaire</h3>
-                            <span style="font-size:12px;color:var(--accent-purple);">Chapitre 6 • Manuel PRINCE2</span>
-                        </div>
-                    </div>
-                    <div style="line-height:1.6;color:var(--text-secondary);font-size:14px;background:rgba(255,255,255,0.03);padding:24px;border-radius:16px;">
-                        <p style="margin-bottom:16px;"><strong style="color:var(--text-primary);">Définition :</strong> Le Cas d'Affaire (Business Case) présente la justification optimale pour lancer un projet. Il répond à la question : "Pourquoi faisons-nous ce projet ?"</p>
-                        
-                        <p style="margin-bottom:16px;">La justification doit rester valide tout au long du projet. C'est l'un des <strong>7 Principes</strong> fondamentaux.</p>
-
-                        <div style="background:rgba(34,197,94,0.1);border-left:4px solid #22c55e;padding:12px;margin:20px 0;border-radius:0 8px 8px 0;">
-                            <strong style="color:#22c55e;">Point clé :</strong> Le Cas d'Affaire n'est pas statique. Il est mis à jour à la fin de chaque séquence pour garantir que le projet est toujours "souhaitable, viable et réalisable".
-                        </div>
-
-                        <p>Le Chef de Projet est responsable de sa mise à jour, mais c'est l'Exécutif (au sein du Comité de Pilotage) qui est responsable de sa validation.</p>
-                    </div>
-                `;
-            }
+            const contentHTML = `
+                <div style="line-height:1.6;color:var(--text-secondary);font-size:14px;background:rgba(255,255,255,0.03);padding:24px;border-radius:16px;">
+                    ${ex.content}
+                </div>
+            `;
 
             document.getElementById('quizCard').innerHTML = `
                 <div class="result-card" style="text-align:left;">
-                    ${content}
+                    ${header}
+                    ${contentHTML}
                      <button onclick="showResults()" style="margin-top:24px;background:transparent;border:1px solid var(--border-color);color:white;padding:10px 20px;border-radius:12px;font-weight:500;cursor:pointer;width:100%;">← Retour aux résultats</button>
                 </div>
             `;

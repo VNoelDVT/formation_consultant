@@ -4,11 +4,12 @@ A standalone, visually stunning demo of the **Devoteam Coach** AI assistant for 
 
 ## Key Features
 
+- **Multi-Certification Support**: Choose between **PRINCE2** and **PMP** (Project Management Professional) tracks.
 - **Gemini-Style UI**: Modern, dark-themed interface with glassmorphism and smooth animations.
-- **Interactive Quiz**: A 5-question PRINCE2 quiz flow with instant feedback.
-- **Adaptive Learning**: Fails in specific questions trigger targeted exercise recommendations (e.g., "Lecture approfondie").
+- **Interactive Quiz**: A 5-question flow (PRINCE2 or PMP) with instant feedback.
+- **Adaptive Learning**: Fails in **any** question trigger targeted, clickable exercise recommendations (e.g., Facts, Lectures) specific to the error.
 - **Session Memory Mock**: Simulates a Google SSO login to "retrieve" historical progress.
-- **PDF Reporting**: Generates a fast, printable HTML-based PDF report summarizing user performance.
+- **PDF Reporting**: Generates a fast, printable HTML-based PDF report customized for the selected certification.
 
 ## How to Run
 
