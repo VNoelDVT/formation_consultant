@@ -1,8 +1,8 @@
-# Devoteam Coach - PRINCE2 AI Demo 🚀
+# Devoteam Coach - PRINCE2 AI Demo
 
 A standalone, visually stunning demo of the **Devoteam Coach** AI assistant for PRINCE2 certification training. This project is a frontend-only demonstration designed for client presentations.
 
-## ✨ Key Features
+## Key Features
 
 - **Gemini-Style UI**: Modern, dark-themed interface with glassmorphism and smooth animations.
 - **Interactive Quiz**: A 5-question PRINCE2 quiz flow with instant feedback.
@@ -10,7 +10,7 @@ A standalone, visually stunning demo of the **Devoteam Coach** AI assistant for 
 - **Session Memory Mock**: Simulates a Google SSO login to "retrieve" historical progress.
 - **PDF Reporting**: Generates a fast, printable HTML-based PDF report summarizing user performance.
 
-## 🛠️ How to Run
+## How to Run
 
 This is a single-file application. No server, Node.js, or backend is required.
 
@@ -18,7 +18,7 @@ This is a single-file application. No server, Node.js, or backend is required.
 2. **Open in Browser**: Double-click the file or drag it into Chrome/Edge.
    - Or paste this path: `file:///c:/Dev/formation_consultant/demo.html`
 
-## 🎬 Demo Scenario Script
+## Demo Scenario Script
 
 To showcase all features effectively, follow this script:
 
@@ -32,6 +32,6 @@ To showcase all features effectively, follow this script:
    - View the **"Rapport de progression"** dashboard.
    - Click **"📥 Télécharger le PDF complet"** to open the print view.
 
-## 📁 Project Structure
+## Project Structure
 
 - `demo.html`: Contains all HTML, CSS, and JavaScript. Zero external dependencies (except Fonts).
