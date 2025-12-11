@@ -1359,8 +1359,11 @@
 
             // Add follow-up message with clickable action
             setTimeout(() => {
+                const existing = document.getElementById('pdfPrompt');
+                if (existing) existing.remove();
+
                 container.innerHTML += `
-                    <div class="message assistant">
+                    <div class="message assistant" id="pdfPrompt">
                         <div class="message-avatar">🎓</div>
                         <div class="message-content">
                             <div class="message-bubble">
