@@ -1,0 +1,43 @@
+### 1. Introduction
+Bienvenue dans ce résumé de votre évaluation PRINCE2. Nous allons examiner vos réponses aux questions posées et identifier les domaines où vous excellez ainsi que ceux qui nécessitent une attention supplémentaire.
+
+### 2. Score global
+Vous avez obtenu 2 bonnes réponses sur 5.
+
+### 3. Ce que l'utilisateur maîtrise
+Vous avez correctement répondu aux questions suivantes :
+
+1. **What does PRINCE2 stand for?**
+   - Votre réponse : B. Projects IN Controlled Environments
+   - Explication : PRINCE2 signifie "Projects IN Controlled Environments".
+
+2. **What is the role of the Project Board in PRINCE2?**
+   - Votre réponse : B. To provide direction and control to the project
+   - Explication : Le rôle du Project Board dans PRINCE2 est de fournir direction et contrôle au projet.
+
+### 4. Ce qu'il doit retravailler
+Vous devez retravailler les questions suivantes :
+
+1. **Which of the following is NOT a PRINCE2 principle?**
+   - Votre réponse : B. Learn from Experience
+   - Bonne réponse : C. Focus on Deliverables
+   - Explication : "Focus on Deliverables" n'est pas un principe PRINCE2. Les principes PRINCE2 incluent "Continued Business Justification", "Learn from Experience", "Tailor to Suit the Project Environment", et d'autres, mais pas "Focus on Deliverables".
+
+2. **What is the purpose of the 'Starting up a Project' process?**
+   - Votre réponse : B. To ensure that the project is completed on time and within budget
+   - Bonne réponse : A. To ensure that the project has a sound basis before any significant commitment of resources
+   - Explication : Le but du processus "Starting up a Project" est de s'assurer que le projet a une base solide avant tout engagement significatif de ressources.
+
+3. **Which of the following is a PRINCE2 theme?**
+   - Votre réponse : B. Project Management
+   - Bonne réponse : A. Risk Management
+   - Explication : "Risk Management" est un thème PRINCE2. Les thèmes PRINCE2 incluent "Business Case", "Organization", "Quality", "Plans", "Risk", "Change", et "Progress".
+
+### 5. Conseils personnalisés pour progresser
+Pour améliorer vos connaissances en PRINCE2, voici quelques conseils :
+
+- **Revoir les principes et thèmes PRINCE2** : Assurez-vous de bien comprendre chaque principe et thème PRINCE2. Les principes sont des directives fondamentales qui doivent être appliquées à tous les projets PRINCE2, tandis que les thèmes sont des aspects clés de la gestion de projet qui doivent être adressés.
+- **Étudier les processus PRINCE2** : Comprendre les différents processus PRINCE2 et leurs objectifs est crucial. Par exemple, le processus "Starting up a Project" est essentiel pour établir une base solide pour le projet.
+- **Pratiquer avec des quiz et des études de cas** : Utilisez des quiz et des études de cas pour tester vos connaissances et voir comment les principes, thèmes et processus PRINCE2 s'appliquent dans des situations réelles.
+
+Continuez à travailler sur ces domaines et vous verrez une amélioration significative dans votre compréhension de PRINCE2. Bonne chance !

@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What does PRINCE2 stand for?",
+    "answers": [
+      "A. Project Resource Integration and Control Environment",
+      "B. Projects IN Controlled Environments",
+      "C. Project Resource Integration and Control Environment",
+      "D. Projects IN Controlled Environments 2"
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which of the following is NOT a PRINCE2 principle?",
+    "answers": [
+      "A. Continued Business Justification",
+      "B. Learn from Experience",
+      "C. Focus on Deliverables",
+      "D. Tailor to Suit the Project Environment"
+    ],
+    "correct_answer": "C"
+  },
+  {
+    "question": "What is the purpose of the 'Starting up a Project' process?",
+    "answers": [
+      "A. To ensure that the project has a sound basis before any significant commitment of resources",
+      "B. To ensure that the project is completed on time and within budget",
+      "C. To ensure that the project is aligned with the organization's strategic objectives",
+      "D. To ensure that the project is delivered to the customer's satisfaction"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "Which of the following is a PRINCE2 theme?",
+    "answers": [
+      "A. Risk Management",
+      "B. Project Management",
+      "C. Quality Management",
+      "D. Resource Management"
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "What is the role of the Project Board in PRINCE2?",
+    "answers": [
+      "A. To manage the day-to-day activities of the project",
+      "B. To provide direction and control to the project",
+      "C. To ensure that the project is completed on time and within budget",
+      "D. To manage the project's resources"
+    ],
+    "correct_answer": "B"
+  }
+]

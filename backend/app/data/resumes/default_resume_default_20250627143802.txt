@@ -1,0 +1,21 @@
+### 1. Introduction
+Bienvenue dans ce résumé de votre évaluation PRINCE2. Nous allons examiner vos réponses et identifier les domaines où vous excellez ainsi que ceux qui nécessitent une attention supplémentaire.
+
+### 2. Score global
+Vous avez obtenu 1 bonne réponse sur 1.
+
+### 3. Ce que l'utilisateur maîtrise
+- **Question 1:** "What does the acronym PRINCE2 stand for?"
+  - **Réponse de l'utilisateur:** "B. Projects IN Controlled Environments"
+  - **Commentaire:** Vous avez correctement identifié que PRINCE2 signifie "Projects IN Controlled Environments".
+
+### 4. Ce qu'il doit retravailler
+Il n'y a pas de questions mal répondues dans ce cas.
+
+### 5. Conseils personnalisés pour progresser
+Vous avez bien compris la signification de l'acronyme PRINCE2. Pour continuer à progresser, il serait bénéfique de :
+- **Étudier les principes fondamentaux de PRINCE2:** Assurez-vous de bien comprendre les sept principes de PRINCE2, qui sont la base de la méthode.
+- **Pratiquer avec des études de cas:** Appliquez vos connaissances à des scénarios réels pour mieux comprendre comment PRINCE2 peut être utilisé dans des projets concrets.
+- **Revoir les concepts clés:** Passez en revue les concepts clés de PRINCE2, tels que les thèmes, les processus et les rôles, pour renforcer votre compréhension globale.
+
+Continuez ainsi, et vous serez bien préparé pour les prochaines évaluations PRINCE2!

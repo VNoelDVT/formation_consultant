@@ -40,7 +40,7 @@ def prince2_agent(state: dict) -> dict:
 
         {{
         "is_quiz_request": true,
-        "num_questions": 1
+        "num_questions": 5
         }}
 
         Si le message précise un nombre de questions, remplace la valeur.
