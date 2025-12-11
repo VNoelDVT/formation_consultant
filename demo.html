@@ -748,6 +748,19 @@
         }
 
         /* Typing Indicator */
+        .chip-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
         .typing-indicator {
             display: none;
             align-items: center;
@@ -894,29 +907,36 @@
             <!-- Welcome Screen -->
             <div class="welcome-screen" id="welcomeScreen">
                 <div class="welcome-icon">🎓</div>
-                <h1 class="welcome-title">Bonjour Valentin !</h1>
-                <p class="welcome-subtitle">
-                    Je suis votre coach IA pour la certification PRINCE2.
-                    Testez vos connaissances, révisez les concepts clés et préparez-vous efficacement à l'examen.
+                <h1 class="welcome-title" id="welcomeTitle">Bonjour Valentin !</h1>
+                <p class="welcome-subtitle" id="welcomeSubtitle">
+                    Sélectionnez votre parcours de certification.
                 </p>
-                <div class="suggestion-chips">
-                    <div class="suggestion-chip" onclick="startQuiz()">
-                        <span class="chip-icon">📝</span>
-                        <span>Quiz rapide (5 questions)</span>
+
+                <!-- Cert Selection -->
+                <div class="suggestion-chips" id="certChips">
+                    <div class="suggestion-chip" onclick="selectCert('PRINCE2')">
+                        <span class="chip-badge"
+                            style="background:linear-gradient(135deg, #fbbf24, #d97706);color:#fff;">P2</span>
+                        <span>PRINCE2 Foundation</span>
                     </div>
-                    <div class="suggestion-chip" onclick="startQuiz()">
-                        <span class="chip-icon">🎯</span>
-                        <span>Examen blanc complet</span>
+                    <div class="suggestion-chip" onclick="selectCert('PMP')">
+                        <span class="chip-badge"
+                            style="background:linear-gradient(135deg, #3b82f6, #1d4ed8);color:#fff;">PMP</span>
+                        <span>PMP Certification</span>
                     </div>
-                    <div class="suggestion-chip" onclick="startQuiz()">
-                        <span class="chip-icon">📚</span>
-                        <span>Réviser les 7 thèmes</span>
-                    </div>
-                    <div class="suggestion-chip" onclick="startQuiz()">
-                        <span class="chip-icon">💡</span>
-                        <span>Points faibles à revoir</span>
+                    <div class="suggestion-chip" style="opacity:0.5;cursor:not-allowed;">
+                        <span class="chip-badge"
+                            style="border:1px solid var(--text-muted);color:var(--text-muted);">⏱️</span>
+                        <span>PSM I (Bientôt)</span>
                     </div>
                 </div>
+
+                <!-- Mode Selection (Hidden) -->
+                <div class="suggestion-chips" id="modeChips" style="display:none;"></div>
+
+                <button id="backToCerts" onclick="showCertSelection()"
+                    style="display:none;margin:20px auto 0;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:13px;padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);">←
+                    Changer de certification</button>
             </div>
 
             <!-- Messages Container -->
@@ -941,73 +961,123 @@
     </main>
 
     <script>
-        const questions = [
-            {
-                question: "Quel est le rôle principal du Comité de Pilotage Projet dans PRINCE2 ?",
-                answers: [
-                    "A. Gérer le travail quotidien du projet",
-                    "B. Fournir une direction et prendre des décisions clés",
-                    "C. Créer les produits du projet",
-                    "D. Planifier les étapes du projet"
-                ],
-                correct: 1
-            },
-            {
-                question: "Combien de principes PRINCE2 existe-t-il ?",
-                answers: [
-                    "A. 5 principes",
-                    "B. 6 principes",
-                    "C. 7 principes",
-                    "D. 8 principes"
-                ],
-                correct: 2
-            },
-            {
-                question: "Quel document définit ce qui doit être livré, son niveau de qualité, et les responsabilités ?",
-                answers: [
-                    "A. Le Plan de Projet",
-                    "B. Le Cas d'Affaire",
-                    "C. La Description de Produit",
-                    "D. Le Registre des Risques"
-                ],
-                correct: 2
-            },
-            {
-                question: "Quel thème PRINCE2 s'assure que le projet reste justifiable ?",
-                answers: [
-                    "A. Organisation",
-                    "B. Qualité",
-                    "C. Cas d'Affaire",
-                    "D. Risques"
-                ],
-                correct: 2
-            },
-            {
-                question: "Dans quelle phase le Chef de Projet prépare-t-il le Plan de Projet ?",
-                answers: [
-                    "A. Démarrer le Projet",
-                    "B. Initialiser le Projet",
-                    "C. Contrôler une Séquence",
-                    "D. Gérer la Livraison des Produits"
-                ],
-                correct: 1
-            }
-        ];
+        const quizData = {
+            'PRINCE2': [
+                {
+                    question: "Quel est le rôle principal du Comité de Pilotage Projet dans PRINCE2 ?",
+                    answers: ["A. Gérer le travail quotidien du projet", "B. Fournir une direction et prendre des décisions clés", "C. Créer les produits du projet", "D. Planifier les étapes du projet"],
+                    correct: 1
+                },
+                {
+                    question: "Combien de principes PRINCE2 existe-t-il ?",
+                    answers: ["A. 5 principes", "B. 6 principes", "C. 7 principes", "D. 8 principes"],
+                    correct: 2
+                },
+                {
+                    question: "Quel document définit ce qui doit être livré, son niveau de qualité, et les responsabilités ?",
+                    answers: ["A. Le Plan de Projet", "B. Le Cas d'Affaire", "C. La Description de Produit", "D. Le Registre des Risques"],
+                    correct: 2
+                },
+                {
+                    question: "Quel thème PRINCE2 s'assure que le projet reste justifiable ?",
+                    answers: ["A. Organisation", "B. Qualité", "C. Cas d'Affaire", "D. Risques"],
+                    correct: 2
+                },
+                {
+                    question: "Dans quelle phase le Chef de Projet prépare-t-il le Plan de Projet ?",
+                    answers: ["A. Démarrer le Projet", "B. Initialiser le Projet", "C. Contrôler une Séquence", "D. Gérer la Livraison des Produits"],
+                    correct: 1
+                }
+            ],
+            'PMP': [
+                {
+                    question: "Quel document autorise formellement l'existence d'un projet ?",
+                    answers: ["A. Le Plan de Management de Projet", "B. La Charte du Projet", "C. L'Énoncé du Contrat", "D. Le Business Case"],
+                    correct: 1
+                },
+                {
+                    question: "Dans la gestion de la valeur acquise, que signifie un CPI < 1.0 ?",
+                    answers: ["A. Le projet est en avance sur le planning", "B. Le projet est en retard", "C. Le projet dépasse le budget", "D. Le projet est sous le budget"],
+                    correct: 2
+                },
+                {
+                    question: "Quelle structure organisationnelle donne le plus de pouvoir au Chef de Projet ?",
+                    answers: ["A. Matricielle Faible", "B. Projetée (Projectized)", "C. Fonctionnelle", "D. Matricielle Forte"],
+                    correct: 1
+                },
+                {
+                    question: "Quel est le but principal du processus 'Maitriser la qualité' ?",
+                    answers: ["A. Auditer les exigences de qualité", "B. Vérifier que les livrables sont corrects", "C. Créer le plan de gestion de la qualité", "D. Améliorer les processus"],
+                    correct: 1
+                },
+                {
+                    question: "Qui est responsable de la gestion des parties prenantes ?",
+                    answers: ["A. Le Sponsor", "B. L'Équipe Projet", "C. Le Chef de Projet", "D. Le Client"],
+                    correct: 2
+                }
+            ]
+        };
 
+        let questions = quizData['PRINCE2']; // Default
+        let currentCertification = 'PRINCE2';
         let currentQuestion = 0;
         let userAnswers = [];
 
-        function startQuiz() {
+        function selectCert(cert) {
+            currentCertification = cert;
+            document.getElementById('welcomeTitle').textContent = `Formation ${cert}`;
+            document.getElementById('welcomeSubtitle').textContent = "Choisissez votre mode d'entraînement";
+
+            document.getElementById('certChips').style.display = 'none';
+            const modeContainer = document.getElementById('modeChips');
+
+            // Dynamic modes based on Cert (Future proofing)
+            const modes = [
+                { icon: '⚡', label: 'Quiz Rapide (5 questions)', action: 'startQuiz(true)' },
+                { icon: '🎯', label: 'Examen Blanc (1h)', action: 'startQuiz(true)' },
+                { icon: '📖', label: 'Révision par Thème', action: 'startQuiz(true)' }
+            ];
+
+            modeContainer.innerHTML = modes.map(m => `
+                <div class="suggestion-chip" onclick="${m.action}">
+                    <span class="chip-icon">${m.icon}</span>
+                    <span>${m.label}</span>
+                </div>
+            `).join('');
+
+            modeContainer.style.display = 'flex';
+            document.getElementById('backToCerts').style.display = 'block';
+        }
+
+        function showCertSelection() {
+            document.getElementById('welcomeTitle').textContent = "Bonjour Valentin !";
+            document.getElementById('welcomeSubtitle').textContent = "Sélectionnez votre parcours de certification.";
+            document.getElementById('certChips').style.display = 'flex';
+            document.getElementById('modeChips').style.display = 'none';
+            document.getElementById('backToCerts').style.display = 'none';
+        }
+
+        function startQuiz(ready) {
+            if (!ready) return; // Guard
+
+            if (currentCertification) {
+                questions = quizData[currentCertification];
+                document.querySelector('.header-title').textContent = `Formation ${currentCertification} ${currentCertification === 'PMP' ? 'Certification' : 'Practitioner'}`;
+                userAnswers = [];
+                currentQuestion = 0;
+            }
+
             document.getElementById('welcomeScreen').style.display = 'none';
             const container = document.getElementById('messagesContainer');
             container.classList.add('active');
+            container.innerHTML = '';
 
             // User message
             container.innerHTML = `
                 <div class="message user">
                     <div class="message-avatar">VN</div>
                     <div class="message-content">
-                        <div class="message-bubble">Je voudrais faire un quiz rapide de 5 questions sur PRINCE2</div>
+                        <div class="message-bubble">Je voudrais m'entraîner sur la certification ${currentCertification}</div>
                     </div>
                 </div>
             `;
@@ -1053,7 +1123,7 @@
                             <div class="quiz-header">
                                 <div class="quiz-icon">📝</div>
                                 <div>
-                                    <div class="quiz-title">Quiz PRINCE2 Practitioner</div>
+                                    <div class="quiz-title">Quiz ${currentCertification} ${currentCertification === 'PMP' ? 'Certification' : 'Practitioner'}</div>
                                     <div class="quiz-subtitle">5 questions • Niveau intermédiaire</div>
                                 </div>
                                 <div class="quiz-progress">
@@ -1193,11 +1263,15 @@
                         const exTypes = [{ icon: '📖', title: 'Lecture approfondie', desc: 'Relire le chapitre du manuel PRINCE2' }, { icon: '🎮', title: 'Quiz thématique', desc: 'Pratiquer avec des questions similaires' }, { icon: '📝', title: 'Fiche de révision', desc: 'Créer une synthèse des points clés' }, { icon: '🔄', title: 'Cas pratique', desc: 'Appliquer le concept à un projet réel' }];
                         const ex = exTypes[idx % exTypes.length];
                         const qNum = questions.indexOf(q) + 1;
-                        return `<div style="background:linear-gradient(135deg,rgba(102,126,234,0.1),rgba(168,85,247,0.1));border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:16px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='translateX(0)'" onclick="${qNum === 4 ? 'startExercise()' : ''}">
-                            <div style="width:44px;height:44px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">${qNum === 4 ? '📖' : ex.icon}</div>
+                        const isSpecial = (currentCertification === 'PRINCE2' && qNum === 4) || (currentCertification === 'PMP' && qNum === 1);
+                        const specialTitle = currentCertification === 'PMP' ? 'Lecture : La Charte' : 'Lecture : Cas d\'Affaire';
+                        const specialDesc = currentCertification === 'PMP' ? 'La Charte autorise le projet. Accédez au module 4.1.' : 'Le thème du Cas d\'Affaire est central. Relisez le chapitre 6.';
+
+                        return `<div style="background:linear-gradient(135deg,rgba(102,126,234,0.1),rgba(168,85,247,0.1));border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:16px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='translateX(0)'" onclick="${isSpecial ? 'startExercise()' : ''}">
+                            <div style="width:44px;height:44px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">${isSpecial ? '📖' : ex.icon}</div>
                             <div style="flex:1;">
-                                <div style="font-weight:600;font-size:15px;margin-bottom:4px;">${qNum === 4 ? 'Lecture approfondie : Cas d\'Affaire' : ex.title}</div>
-                                <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">${qNum === 4 ? 'Le thème du Cas d\'Affaire est central. Relisez le chapitre 6 pour comprendre la justification continue.' : ex.desc}</div>
+                                <div style="font-weight:600;font-size:15px;margin-bottom:4px;">${isSpecial ? specialTitle : ex.title}</div>
+                                <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">${isSpecial ? specialDesc : ex.desc}</div>
                                 <div style="font-size:12px;color:var(--accent-purple);margin-top:6px;">Basé sur Question ${qNum}</div>
                             </div>
                             <span style="color:var(--text-muted);font-size:18px;">→</span>
@@ -1248,8 +1322,29 @@
 
         function startExercise() {
             const container = document.getElementById('messagesContainer');
-            document.getElementById('quizCard').innerHTML = `
-                <div class="result-card" style="text-align:left;">
+
+            let content = '';
+            if (currentCertification === 'PMP') {
+                content = `
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+                        <div style="width:40px;height:40px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;">📘</div>
+                        <div>
+                            <h3 style="font-size:18px;">La Charte du Projet</h3>
+                            <span style="font-size:12px;color:var(--accent-purple);">PMBOK Guide • Section 4.1</span>
+                        </div>
+                    </div>
+                    <div style="line-height:1.6;color:var(--text-secondary);font-size:14px;background:rgba(255,255,255,0.03);padding:24px;border-radius:16px;">
+                        <p style="margin-bottom:16px;"><strong style="color:var(--text-primary);">Définition :</strong> La Charte du Projet (Project Charter) est le document émis par le sponsor qui autorise formellement l'existence du projet et donne au chef de projet l'autorité d'utiliser les ressources organisationnelles.</p>
+                        
+                        <div style="background:rgba(59,130,246,0.1);border-left:4px solid #3b82f6;padding:12px;margin:20px 0;border-radius:0 8px 8px 0;">
+                            <strong style="color:#3b82f6;">Point clé :</strong> Sans Charte, il n'y a pas de projet. C'est le lien entre la stratégie de l'organisation et le projet.
+                        </div>
+
+                        <p>Elle contient généralement : les besoins d'affaires, les objectifs mesurables, les risques de haut niveau, et la liste des parties prenantes clés.</p>
+                    </div>
+                `;
+            } else {
+                content = `
                     <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
                         <div style="width:40px;height:40px;background:var(--accent-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;">📖</div>
                         <div>
@@ -1268,6 +1363,12 @@
 
                         <p>Le Chef de Projet est responsable de sa mise à jour, mais c'est l'Exécutif (au sein du Comité de Pilotage) qui est responsable de sa validation.</p>
                     </div>
+                `;
+            }
+
+            document.getElementById('quizCard').innerHTML = `
+                <div class="result-card" style="text-align:left;">
+                    ${content}
                      <button onclick="showResults()" style="margin-top:24px;background:transparent;border:1px solid var(--border-color);color:white;padding:10px 20px;border-radius:12px;font-weight:500;cursor:pointer;width:100%;">← Retour aux résultats</button>
                 </div>
             `;
@@ -1391,7 +1492,7 @@
             w.document.write(`
                 <html>
                 <head>
-                    <title>Rapport_PRINCE2_11Dec2025.pdf</title>
+                    <title>Rapport_${currentCertification}_11Dec2025.pdf</title>
                     <style>
                         body { font-family: 'Helvetica', sans-serif; padding: 40px; color: #333; }
                         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #667eea; padding-bottom: 20px; margin-bottom: 40px; }
@@ -1407,7 +1508,7 @@
                 <body>
                     <div class="header">
                         <div class="logo">Devoteam Coach 🚀</div>
-                        <div>Rapport de Formation PRINCE2</div>
+                        <div>Rapport de Formation ${currentCertification}</div>
                     </div>
                     
                     <h1>Rapport de Progression</h1>
@@ -1429,15 +1530,25 @@
                     </div>
 
                     <h2>Détail des compétences</h2>
-                    <p><strong>Points forts :</strong> Principes, Gestion par Séquence.</p>
-                    <p><strong>Points d'attention :</strong> Cas d'Affaire (Justification Continue).</p>
+                    <div style="margin-bottom:20px;">
+                        ${currentCertification === 'PMP' ?
+                    `<p><strong>Points forts :</strong> Gestion du périmètre, Parties prenantes.</p>
+                             <p><strong>Points d'attention :</strong> Processus d'Initialisation (Charte).</p>` :
+                    `<p><strong>Points forts :</strong> Principes, Gestion par Séquence.</p>
+                             <p><strong>Points d'attention :</strong> Cas d'Affaire (Justification Continue).</p>`
+                }
+                    </div>
                     
                     <div style="margin-top:20px;padding:15px;background:#fff3cd;border:1px solid #ffeeba;border-radius:4px;color:#856404;">
-                        <strong>Recommandation IA :</strong> Une révision approfondie du thème Cas d'Affaire est recommandée avant l'examen blanc.
+                        <strong>Recommandation IA :</strong> 
+                        ${currentCertification === 'PMP' ?
+                    'Relire le chapitre sur l\'intégration et la Charte Projet (4.1) avant l\'examen PMP.' :
+                    'Une révision approfondie du thème Cas d\'Affaire est recommandée avant l\'examen blanc.'
+                }
                     </div>
 
                     <div class="footer">
-                        Généré par Devoteam Coach AI • Formation Certifiante PRINCE2
+                        Généré par Devoteam Coach AI • Formation Certifiante ${currentCertification}
                     </div>
                 </body>
                 </html>
