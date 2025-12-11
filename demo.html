@@ -850,7 +850,7 @@
             <span>Nouvelle session</span>
         </button>
 
-        <div class="sidebar-section">
+        <div class="sidebar-section auth-only" style="display:none">
             <div class="sidebar-section-title">Aujourd'hui</div>
             <div class="history-item active">
                 <span class="history-icon">📝</span>
@@ -858,7 +858,7 @@
             </div>
         </div>
 
-        <div class="sidebar-section">
+        <div class="sidebar-section auth-only" style="display:none">
             <div class="sidebar-section-title">Hier</div>
             <div class="history-item">
                 <span class="history-icon">📊</span>
@@ -870,7 +870,7 @@
             </div>
         </div>
 
-        <div class="sidebar-section">
+        <div class="sidebar-section auth-only" style="display:none">
             <div class="sidebar-section-title">7 derniers jours</div>
             <div class="history-item">
                 <span class="history-icon">🎯</span>
@@ -1086,9 +1086,10 @@
         };
 
         let questions = quizData['PRINCE2']; // Default
-        let currentCertification = 'PRINCE2';
+        let currentCertification = '';
         let currentQuestion = 0;
         let userAnswers = [];
+        let isLoggedIn = false;
 
         function handleInitialLogin() {
             const btn = document.getElementById('initialLoginBtn');
@@ -1137,6 +1138,10 @@
                 avatar.style.background = "linear-gradient(135deg, #f093fb, #f5576c)";
                 avatar.style.color = "white";
                 document.getElementById('sidebarUserBadge').style.opacity = "1";
+
+                // Show History
+                document.querySelectorAll('.auth-only').forEach(el => el.style.display = 'block');
+                isLoggedIn = true;
 
             }, 1200);
         }
@@ -1471,8 +1476,12 @@
         }
 
         function requestLogin(score) {
-            // Using global score if passed, or from valid scope
             window.currentScore = score;
+
+            if (isLoggedIn) {
+                showPDFGeneration(score);
+                return;
+            }
 
             // Simulate Login Modal
             const modal = document.createElement('div');
@@ -1657,6 +1666,7 @@
         const styleSheet = document.createElement("style");
         styleSheet.innerText = `
             @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            .auth-only { display: none; } /* Initially hide auth-only sections */
         `;
         document.head.appendChild(styleSheet);
 
