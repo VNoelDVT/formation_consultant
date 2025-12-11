@@ -10,7 +10,7 @@ NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 # Initialiser le client NVIDIA (OpenAI-compatible)
 client = OpenAI(
     base_url="https://integrate.api.nvidia.com/v1",
-    api_key="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"
+    api_key="nvapi-..."
 )
 
 def generate_content(prompt: str) -> str:
