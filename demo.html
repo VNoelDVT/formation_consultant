@@ -898,7 +898,7 @@
         <header class="header">
             <div class="header-title">Formation PRINCE2 Practitioner</div>
             <div class="header-actions">
-                <button class="header-btn">📊 Mes statistiques</button>
+                <button class="header-btn" onclick="openStats()">📊 Mes statistiques</button>
                 <button class="header-btn">⚙️ Paramètres</button>
             </div>
         </header>
@@ -1131,7 +1131,7 @@
                 }, 500);
 
                 // Update Sidebar smoothly
-                document.getElementById('sidebarName').textContent = "Valentin Noël";
+                document.getElementById('sidebarName').innerHTML = `Valentin Noël <span style="font-size:10px;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-left:6px;font-weight:700;">Lvl 3</span>`;
                 document.getElementById('sidebarStatus').textContent = "Devoteam Premium";
                 const avatar = document.getElementById('sidebarAvatar');
                 avatar.textContent = "VN";
@@ -1670,6 +1670,179 @@
         `;
         document.head.appendChild(styleSheet);
 
+
+        // Gamification & Stats logic
+        function openStats() {
+            // Create Modal if not exists
+            if (!document.getElementById('statsModal')) {
+                const modal = document.createElement('div');
+                modal.id = 'statsModal';
+                modal.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.3s ease;`;
+
+                modal.innerHTML = `
+                    <div style="background:var(--card-bg);width:90%;max-width:850px;border-radius:24px;border:1px solid var(--border-color);overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.5);transform:scale(0.9);transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                        <div style="padding:24px;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;">
+                            <h2 style="margin:0;font-size:20px;display:flex;align-items:center;gap:12px;">
+                                <span style="font-size:24px;">🏆</span> 
+                                Mes Performances
+                            </h2>
+                            <button onclick="document.getElementById('statsModal').style.opacity='0';document.getElementById('statsModal').style.pointerEvents='none'" style="background:none;border:none;color:var(--text-secondary);font-size:24px;cursor:pointer;">&times;</button>
+                        </div>
+                        
+                        <div style="padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:40px;">
+                            
+                            <!-- Left Col: Stats & Graphs -->
+                            <div>
+                                <div style="display:flex;gap:16px;margin-bottom:24px;">
+                                    <div style="flex:1;background:rgba(255,255,255,0.03);padding:16px;border-radius:16px;text-align:center;">
+                                        <div style="font-size:24px;font-weight:700;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Lvl 3</div>
+                                        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">Apprenti Expert</div>
+                                    </div>
+                                    <div style="flex:1;background:rgba(255,255,255,0.03);padding:16px;border-radius:16px;text-align:center;">
+                                        <div style="font-size:24px;font-weight:700;color:#22c55e;">2,840</div>
+                                        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">Points XP</div>
+                                    </div>
+                                </div>
+
+                                <h3 style="font-size:15px;margin-bottom:12px;color:var(--text-secondary);">Activité Hebdo</h3>
+                                <div style="height:120px;display:flex;align-items:flex-end;gap:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:24px;">
+                                    <div class="stat-bar" style="height:30%;--target-height:30%;background:rgba(168,85,247,0.3);"></div>
+                                    <div class="stat-bar" style="height:45%;--target-height:45%;background:rgba(168,85,247,0.4);"></div>
+                                    <div class="stat-bar" style="height:40%;--target-height:40%;background:rgba(168,85,247,0.5);"></div>
+                                    <div class="stat-bar" style="height:60%;--target-height:60%;background:rgba(168,85,247,0.6);"></div>
+                                    <div class="stat-bar" style="height:55%;--target-height:55%;background:rgba(168,85,247,0.7);"></div>
+                                    <div class="stat-bar" style="height:75%;--target-height:75%;background:rgba(168,85,247,0.8);"></div>
+                                    <div class="stat-bar" style="height:90%;--target-height:90%;background:var(--accent-gradient);box-shadow:0 0 12px rgba(168,85,247,0.5);"></div>
+                                </div>
+
+                                <h3 style="font-size:15px;margin-bottom:16px;color:var(--text-secondary);">Mes Compétences</h3>
+                                <div style="display:flex;flex-direction:column;gap:16px;">
+                                    <div class="skill-item">
+                                        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;">
+                                            <span>PRINCE2</span>
+                                            <span style="color:#d97706;">75%</span>
+                                        </div>
+                                        <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;">
+                                            <div class="skill-bar" style="width:0;--target-width:75%;height:100%;background:linear-gradient(90deg, #fbbf24, #d97706);"></div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item">
+                                        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;">
+                                            <span>Agile / PSM</span>
+                                            <span style="color:#22c55e;">40%</span>
+                                        </div>
+                                        <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;">
+                                            <div class="skill-bar" style="width:0;--target-width:40%;height:100%;background:linear-gradient(90deg, #22c55e, #16a34a);"></div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item">
+                                        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;">
+                                            <span>PMP</span>
+                                            <span style="color:#3b82f6;">20%</span>
+                                        </div>
+                                        <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;">
+                                            <div class="skill-bar" style="width:0;--target-width:20%;height:100%;background:linear-gradient(90deg, #3b82f6, #1d4ed8);"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Col: Leaderboard -->
+                            <div style="background:rgba(255,255,255,0.02);border-radius:20px;padding:20px;">
+                                <h3 style="font-size:16px;margin:0 0 20px 0;display:flex;align-items:center;gap:8px;">
+                                    <span>🏅</span> Classement Général
+                                </h3>
+                                <div style="display:flex;flex-direction:column;gap:12px;">
+                                    
+                                    <!-- 1. Gianluca (Gold) -->
+                                    <div class="leaderboard-item" style="display:flex;align-items:center;background:linear-gradient(90deg, rgba(255,215,0,0.15), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,215,0,0.4);">
+                                        <div style="width:24px;font-weight:bold;color:#ffd700;font-size:18px;">1</div>
+                                        <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg, #ffd700, #f59e0b);color:black;display:flex;align-items:center;justify-content:center;font-weight:bold;margin:0 12px;box-shadow:0 0 10px rgba(255,215,0,0.3);">GO</div>
+                                        <div style="flex:1;">
+                                            <div style="font-weight:700;color:#ffd700;">Gianluca ODOARDI</div>
+                                            <div style="font-size:11px;color:rgba(255,215,0,0.8);">Maitre Jedi • 4,500 XP</div>
+                                        </div>
+                                        <span style="font-size:20px;">👑</span>
+                                    </div>
+
+                                    <!-- 2. Nicolas (Silver) -->
+                                    <div class="leaderboard-item" style="display:flex;align-items:center;background:linear-gradient(90deg, rgba(192,192,192,0.1), transparent);padding:12px;border-radius:12px;border:1px solid rgba(192,192,192,0.3);">
+                                        <div style="width:24px;font-weight:bold;color:#c0c0c0;font-size:16px;">2</div>
+                                        <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg, #e5e7eb, #9ca3af);color:#1f2937;display:flex;align-items:center;justify-content:center;font-weight:bold;margin:0 12px;">NC</div>
+                                        <div style="flex:1;">
+                                            <div style="font-weight:600;color:#e5e7eb;">Nicolas CHAUMONT</div>
+                                            <div style="font-size:11px;color:#9ca3af;">Expert • 3,900 XP</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3. Valentin (Bronze/You) -->
+                                    <div class="leaderboard-item" style="display:flex;align-items:center;background:rgba(255,255,255,0.08);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);transform:scale(1.02);box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-top:10px;">
+                                        <div style="width:24px;font-weight:bold;color:#cd7f32;font-size:16px;">3</div>
+                                        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;font-weight:bold;margin:0 12px;">VN</div>
+                                        <div style="flex:1;">
+                                            <div style="font-weight:600;">Valentin Noël (Moi)</div>
+                                            <div style="font-size:11px;color:var(--accent-purple);">Apprenti • 2,840 XP</div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div style="margin-top:32px;text-align:center;background:rgba(0,0,0,0.2);padding:16px;border-radius:12px;">
+                                    <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;">Prochain défi : Battre Nicolas !</div>
+                                    <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;">
+                                        <div style="height:100%;width:72%;background:#cd7f32;opacity:0.8;"></div>
+                                    </div>
+                                    <div style="font-size:10px;margin-top:4px;color:var(--text-muted);">Encore 1,060 XP pour atteindre le rang Expert</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                // Add styles if not present
+                if (!document.getElementById('statsStyles')) {
+                    const style = document.createElement('style');
+                    style.id = 'statsStyles';
+                    style.innerHTML = `
+                        .stat-bar { width: 100%; border-radius: 4px 4px 0 0; }
+                        .leaderboard-item { transition: transform 0.2s; }
+                        .leaderboard-item:hover { transform: scale(1.02); background: rgba(255,255,255,0.05); }
+                        .skill-bar { border-radius: 3px; }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+
+            const modal = document.getElementById('statsModal');
+            modal.style.display = 'flex';
+            modal.style.pointerEvents = 'auto'; // Re-enable events
+
+            // Animation Trigger
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.querySelector('div').style.transform = 'scale(1)';
+
+                // Animate bars (Stats)
+                document.querySelectorAll('.stat-bar').forEach((bar, index) => {
+                    bar.style.height = '0';
+                    setTimeout(() => {
+                        bar.style.transition = 'height 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        bar.style.height = bar.style.getPropertyValue('--target-height');
+                    }, 300 + (index * 100));
+                });
+
+                // Animate bars (Skills)
+                document.querySelectorAll('.skill-bar').forEach((bar, index) => {
+                    bar.style.width = '0';
+                    setTimeout(() => {
+                        bar.style.transition = 'width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        bar.style.width = bar.style.getPropertyValue('--target-width');
+                    }, 600 + (index * 150));
+                });
+            }, 10);
+        }
 
         function resetToWelcome() {
             currentQuestion = 0;
